@@ -53,6 +53,7 @@ class _CreateBlogState extends State<CreateBlog> {
       // Successfully created the blog
       print('Blog created successfully!');
       print('Response: ${response.body}');
+      
     } else {
       // Handle the error
       print('Failed to create blog. Status code: ${response.statusCode}');
