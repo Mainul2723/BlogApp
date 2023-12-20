@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:googleapis/drive/v2.dart' as drive;
-import 'package:googleapis_auth/auth_io.dart' as auth;
+import 'package:blog/provider/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class CreateBlog extends StatefulWidget {
   const CreateBlog({Key? key}) : super(key: key);
@@ -24,7 +24,6 @@ class _CreateBlogState extends State<CreateBlog> {
 
   File? _image;
   final picker = ImagePicker();
-  final String token = '137|ROLOym5mK7PygPXMFfyle769yFF1fDbTNzGLMtcG';
 
   @override
   void initState() {
@@ -35,6 +34,8 @@ class _CreateBlogState extends State<CreateBlog> {
   }
 
   Future<void> createBlog() async {
+    final token = Provider.of<TokenProvider>(context, listen: false).token;
+    print(token);
     final url =
         Uri.parse('https://apitest.smartsoft-bd.com/api/admin/blog-news/store');
 
@@ -59,6 +60,7 @@ class _CreateBlogState extends State<CreateBlog> {
       // Successfully created the blog
       print('Blog created successfully!');
       print('Response: ${response.body}');
+      Navigator.pop(context);
     } else {
       // Handle the error
       print('Failed to create blog. Status code: ${response.statusCode}');

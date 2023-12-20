@@ -4,16 +4,16 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class UpdateBlog extends StatefulWidget {
+class ReadBlog extends StatefulWidget {
   final Map<String, dynamic> blog;
 
-  const UpdateBlog({Key? key, required this.blog}) : super(key: key);
+  const ReadBlog({Key? key, required this.blog}) : super(key: key);
 
   @override
-  _UpdateBlogState createState() => _UpdateBlogState();
+  _ReadBlogState createState() => _ReadBlogState();
 }
 
-class _UpdateBlogState extends State<UpdateBlog> {
+class _ReadBlogState extends State<ReadBlog> {
   TextEditingController titleController = TextEditingController();
   TextEditingController subTitleController = TextEditingController();
   TextEditingController slugController = TextEditingController();

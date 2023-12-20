@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:blog/provider/auth.dart';
 import 'package:blog/screens/crud/create.dart';
+import 'package:blog/screens/crud/read.dart';
 import 'package:blog/screens/crud/update.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class BlogList extends StatefulWidget {
   const BlogList({Key? key}) : super(key: key);
@@ -21,12 +24,12 @@ class _BlogListState extends State<BlogList> {
   }
 
   Future<void> fetchBlogs() async {
-    final authToken = '137|ROLOym5mK7PygPXMFfyle769yFF1fDbTNzGLMtcG';
+    final token = Provider.of<TokenProvider>(context, listen: false).token;
 
     final response = await http.get(
       Uri.parse('https://apitest.smartsoft-bd.com/api/admin/blog-news'),
       headers: {
-        'Authorization': 'Bearer $authToken',
+        'Authorization': 'Bearer $token',
       },
     );
 
@@ -38,6 +41,7 @@ class _BlogListState extends State<BlogList> {
 
         setState(() {
           blogs = List<Map<String, dynamic>>.from(blogData);
+          print(token);
         });
       } else {
         // Handle API error
@@ -50,7 +54,7 @@ class _BlogListState extends State<BlogList> {
   }
 
   Future<void> deleteBlog(int index) async {
-    final authToken = '137|ROLOym5mK7PygPXMFfyle769yFF1fDbTNzGLMtcG';
+    final token = Provider.of<TokenProvider>(context, listen: false).token;
 
     final blogId = blogs[index]['id'];
 
@@ -58,7 +62,7 @@ class _BlogListState extends State<BlogList> {
       Uri.parse(
           'https://apitest.smartsoft-bd.com/api/admin/blog-news/delete/$blogId'),
       headers: {
-        'Authorization': 'Bearer $authToken',
+        'Authorization': 'Bearer $token',
       },
     );
 
@@ -91,6 +95,7 @@ class _BlogListState extends State<BlogList> {
                   builder: (context) => CreateBlog(),
                 ),
               );
+              fetchBlogs();
             },
             icon: const Icon(Icons.add),
           ),
@@ -153,7 +158,14 @@ class _BlogListState extends State<BlogList> {
                           ],
                         ),
                         onTap: () {
-                          // Handle blog item tap
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReadBlog(
+                                blog: blog,
+                              ),
+                            ),
+                          );
                         },
                       ),
                     );
