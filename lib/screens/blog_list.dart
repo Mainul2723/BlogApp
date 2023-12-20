@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:blog/screens/crud/create.dart';
+import 'package:blog/screens/crud/update.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -129,10 +130,26 @@ class _BlogListState extends State<BlogList> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                                onPressed: () {}, icon: const Icon(Icons.edit)),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        UpdateBlog(blog: blog),
+                                  ),
+                                ).then((result) {
+                                  if (result != null && result as bool) {
+                                    // Update the UI by refetching the blogs
+                                    fetchBlogs();
+                                  }
+                                });
+                              },
+                              icon: const Icon(Icons.edit),
+                            ),
                             IconButton(
-                                onPressed: () => deleteBlog(index),
-                                icon: const Icon(Icons.delete)),
+                              onPressed: () => deleteBlog(index),
+                              icon: const Icon(Icons.delete),
+                            ),
                           ],
                         ),
                         onTap: () {

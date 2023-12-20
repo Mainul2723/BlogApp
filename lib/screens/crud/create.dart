@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'package:googleapis/drive/v2.dart' as drive;
+import 'package:googleapis_auth/auth_io.dart' as auth;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +22,8 @@ class _CreateBlogState extends State<CreateBlog> {
   TextEditingController videoController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
+  File? _image;
+  final picker = ImagePicker();
   final String token = '137|ROLOym5mK7PygPXMFfyle769yFF1fDbTNzGLMtcG';
 
   @override
@@ -53,7 +59,6 @@ class _CreateBlogState extends State<CreateBlog> {
       // Successfully created the blog
       print('Blog created successfully!');
       print('Response: ${response.body}');
-      
     } else {
       // Handle the error
       print('Failed to create blog. Status code: ${response.statusCode}');
@@ -70,6 +75,9 @@ class _CreateBlogState extends State<CreateBlog> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(
+              height: 16,
+            ),
             TextField(
               textAlign: TextAlign.center,
               controller: titleController,
@@ -171,6 +179,7 @@ class _CreateBlogState extends State<CreateBlog> {
             const SizedBox(
               height: 20,
             ),
+
             ElevatedButton(
               onPressed: createBlog,
               child: Text('Create'),
