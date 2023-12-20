@@ -4,7 +4,7 @@ The **Flutter Blog App** is a mobile application that enables users to read, cre
 
 ## Screenshots
 
-![Screenshot 1](Screenshot_1703102714.png) ![Screenshot 2](Screenshot_1703102724.png) ![Screenshot 3](Screenshot_1703102729.png) ![Screenshot 4](Screenshot_1703102734.png) ![Screenshot 5](Screenshot_1703102739.png)
+<img src="Screenshot_1703102714.png" alt="Screenshot 1" width="150"/> <img src="Screenshot_1703102724.png" alt="Screenshot 2" width="150"/> <img src="Screenshot_1703102729.png" alt="Screenshot 3" width="150"/> <img src="Screenshot_1703102734.png" alt="Screenshot 4" width="150"/> <img src="Screenshot_1703102739.png" alt="Screenshot 5" width="150"/>
 
 ## Features
 
