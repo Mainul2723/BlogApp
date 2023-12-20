@@ -89,8 +89,9 @@ class _UpdateBlogState extends State<UpdateBlog> {
                 controller: titleController,
                 decoration: InputDecoration(
                   hintText: "Title",
+                  labelText: "Title",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
@@ -100,8 +101,9 @@ class _UpdateBlogState extends State<UpdateBlog> {
                 controller: subTitleController,
                 decoration: InputDecoration(
                   hintText: "Sub-title",
+                  labelText: "Sub-title",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
@@ -111,8 +113,9 @@ class _UpdateBlogState extends State<UpdateBlog> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Slug",
+                  labelText: "Slug",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
@@ -122,8 +125,9 @@ class _UpdateBlogState extends State<UpdateBlog> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Description",
+                  labelText: "Description",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
@@ -133,8 +137,9 @@ class _UpdateBlogState extends State<UpdateBlog> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Category ID",
+                  labelText: "Category ID",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
@@ -144,8 +149,9 @@ class _UpdateBlogState extends State<UpdateBlog> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Video",
+                  labelText: "Video",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
@@ -187,8 +193,23 @@ class _UpdateBlogState extends State<UpdateBlog> {
               ),
 
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black, // Black background
+                  onPrimary: Colors.white, // White text
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 15, horizontal: 25), // Increased padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15), // Rounded corners
+                  ),
+                ),
                 onPressed: () => updateBlog(),
-                child: const Text('Update Blog'),
+                child: const Text(
+                  'Update Blog',
+                  style: TextStyle(
+                    fontSize: 18, // Slightly larger font size
+                    fontWeight: FontWeight.w500, // Semi-bold weight
+                  ),
+                ),
               ),
             ],
           ),

@@ -1,4 +1,4 @@
-import 'dart:io';
+// import 'dart:io';
 import 'package:blog/provider/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,7 +22,7 @@ class _CreateBlogState extends State<CreateBlog> {
   TextEditingController videoController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
-  File? _image;
+  // File? _image;
   final picker = ImagePicker();
 
   @override
@@ -85,8 +85,9 @@ class _CreateBlogState extends State<CreateBlog> {
               controller: titleController,
               decoration: InputDecoration(
                 hintText: "Title",
+                labelText: "Title",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
@@ -96,8 +97,9 @@ class _CreateBlogState extends State<CreateBlog> {
               controller: subtitleController,
               decoration: InputDecoration(
                 hintText: "Sub-title",
+                labelText: "Sub-title",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
@@ -107,8 +109,9 @@ class _CreateBlogState extends State<CreateBlog> {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 hintText: "Slug",
+                labelText: "Slug",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
@@ -118,8 +121,9 @@ class _CreateBlogState extends State<CreateBlog> {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 hintText: "Description",
+                labelText: "Description",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
@@ -129,8 +133,9 @@ class _CreateBlogState extends State<CreateBlog> {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 hintText: "Category ID",
+                labelText: "Category ID",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
@@ -140,8 +145,9 @@ class _CreateBlogState extends State<CreateBlog> {
               textAlign: TextAlign.center,
               decoration: InputDecoration(
                 hintText: "Video",
+                labelText: "Video",
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
@@ -183,9 +189,29 @@ class _CreateBlogState extends State<CreateBlog> {
             ),
 
             ElevatedButton(
-              onPressed: createBlog,
-              child: Text('Create'),
-            ),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.black, // Black background
+                onPrimary: Colors.white, // White text
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 25,
+                ), // Increased padding
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15), // Rounded corners
+                ),
+              ),
+              onPressed: () {
+                createBlog();
+                Navigator.pop(context, true);
+              },
+              child: const Text(
+                'Create Blog',
+                style: TextStyle(
+                  fontSize: 18, // Slightly larger font size
+                  fontWeight: FontWeight.w500, // Semi-bold weight
+                ),
+              ),
+            )
           ],
         ),
       ),

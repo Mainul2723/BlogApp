@@ -15,6 +15,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool isPasswordVisible = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -60,12 +61,24 @@ class _LoginState extends State<Login> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Text(
+            "BlogApp",
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
           TextField(
             controller: emailController,
+            textAlign: TextAlign.center,
             decoration: InputDecoration(
               hintText: "Email",
+              labelText: "Email",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(15),
               ),
             ),
           ),
@@ -73,11 +86,24 @@ class _LoginState extends State<Login> {
             height: 20,
           ),
           TextField(
+            obscureText: !isPasswordVisible,
             controller: passwordController,
+            textAlign: TextAlign.center,
             decoration: InputDecoration(
               hintText: "Password",
+              labelText: "Password",
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isPasswordVisible = !isPasswordVisible;
+                  });
+                },
               ),
             ),
           ),
@@ -85,10 +111,25 @@ class _LoginState extends State<Login> {
             height: 50,
           ),
           ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.black, // Black background
+              onPrimary: Colors.white, // White text
+              padding: const EdgeInsets.symmetric(
+                  vertical: 15, horizontal: 25), // Increased padding
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15), // Rounded corners
+              ),
+            ),
             onPressed: () {
               login(emailController.text, passwordController.text);
             },
-            child: const Text('Login'),
+            child: const Text(
+              'Login',
+              style: TextStyle(
+                fontSize: 18, // Slightly larger font size
+                fontWeight: FontWeight.w500, // Semi-bold weight
+              ),
+            ),
           ),
         ],
       ),

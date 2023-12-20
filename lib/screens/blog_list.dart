@@ -80,6 +80,12 @@ class _BlogListState extends State<BlogList> {
     }
   }
 
+  Future<void> refreshScreen() async {
+    await fetchBlogs();
+    // You can add additional refresh logic here if needed
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,21 +94,26 @@ class _BlogListState extends State<BlogList> {
         actions: [
           IconButton(
             iconSize: 30,
-            onPressed: () {
-              Navigator.push(
+            onPressed: () async {
+              // Wait for the result from the CreateBlog screen
+              final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CreateBlog(),
+                  builder: (context) => const CreateBlog(),
                 ),
               );
-              fetchBlogs();
+
+              // Check if the result indicates a need to refresh the screen
+              if (result == true) {
+                await refreshScreen();
+              }
             },
             icon: const Icon(Icons.add),
           ),
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => fetchBlogs(), // Callback function for refresh action
+        onRefresh: refreshScreen, // Callback function for refresh action
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -115,10 +126,10 @@ class _BlogListState extends State<BlogList> {
                   itemBuilder: (context, index) {
                     final blog = blogs[index];
                     return Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: ListTile(
                         shape: RoundedRectangleBorder(
-                          side: BorderSide(width: 2),
+                          side: const BorderSide(width: 2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         leading: CircleAvatar(
@@ -126,7 +137,7 @@ class _BlogListState extends State<BlogList> {
                           backgroundColor: const Color(0xff6ae792),
                           child: Text(
                             blogs[index].toString().substring(5, 8),
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         ),
                         title: Text(blog['title']),
@@ -134,26 +145,47 @@ class _BlogListState extends State<BlogList> {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        UpdateBlog(blog: blog),
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          UpdateBlog(blog: blog),
+                                    ),
+                                  ).then((result) {
+                                    if (result != null && result as bool) {
+                                      // Update the UI by refetching the blogs
+                                      fetchBlogs();
+                                    }
+                                  });
+                                },
+                                borderRadius: BorderRadius.circular(20),
+                                child: const Tooltip(
+                                  message: 'Update',
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(Icons.edit),
                                   ),
-                                ).then((result) {
-                                  if (result != null && result as bool) {
-                                    // Update the UI by refetching the blogs
-                                    fetchBlogs();
-                                  }
-                                });
-                              },
-                              icon: const Icon(Icons.edit),
+                                ),
+                              ),
                             ),
-                            IconButton(
-                              onPressed: () => deleteBlog(index),
-                              icon: const Icon(Icons.delete),
+                            const SizedBox(width: 8),
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: InkWell(
+                                onTap: () => deleteBlog(index),
+                                borderRadius: BorderRadius.circular(20),
+                                child: const Tooltip(
+                                  message: 'Delete',
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Icon(Icons.delete),
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),

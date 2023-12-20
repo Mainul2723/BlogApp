@@ -22,10 +22,13 @@ class _ReadBlogState extends State<ReadBlog> {
   TextEditingController videoController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
+  late int blogId;
+
   @override
   void initState() {
     super.initState();
     // Initialize controllers with existing values
+    blogId = widget.blog['id'];
     titleController.text = widget.blog['title'].toString();
     subTitleController.text = widget.blog['sub_title'].toString();
     slugController.text = widget.blog['slug'].toString();
@@ -37,7 +40,6 @@ class _ReadBlogState extends State<ReadBlog> {
 
   Future<void> updateBlog() async {
     final token = Provider.of<TokenProvider>(context, listen: false).token;
-    final blogId = widget.blog['id'];
 
     final response = await http.post(
       Uri.parse(
@@ -76,7 +78,7 @@ class _ReadBlogState extends State<ReadBlog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Blog'),
+        title: Text('Blog ID: ${widget.blog['id']}'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -85,67 +87,79 @@ class _ReadBlogState extends State<ReadBlog> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextField(
+                readOnly: true,
                 textAlign: TextAlign.center,
                 controller: titleController,
                 decoration: InputDecoration(
                   hintText: "Title",
+                  labelText: "Title",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
               const SizedBox(height: 16), // Add some space between text fields
               TextField(
+                readOnly: true,
                 textAlign: TextAlign.center,
                 controller: subTitleController,
                 decoration: InputDecoration(
                   hintText: "Sub-title",
+                  labelText: "Sub-title",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
+                readOnly: true,
                 controller: slugController,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Slug",
+                  labelText: "Slug",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
+                readOnly: true,
                 controller: descriptionController,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Description",
+                  labelText: "Description",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
+                readOnly: true,
                 controller: categoryIDController,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Category ID",
+                  labelText: "Category ID",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
+                readOnly: true,
                 controller: videoController,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: "Video",
+                  labelText: "Video",
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                 ),
               ),
@@ -160,35 +174,10 @@ class _ReadBlogState extends State<ReadBlog> {
                     ),
                 readOnly: true,
                 //set it true, so that user will not able to edit text
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1950),
-                      //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(2100));
-
-                  if (pickedDate != null) {
-                    print(
-                        pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                    String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                    print(
-                        formattedDate); //formatted date output using intl package =>  2021-03-16
-                    setState(() {
-                      dateController.text =
-                          formattedDate; //set output date to TextField value.
-                    });
-                  } else {}
-                },
+                onTap: () {},
               ),
               const SizedBox(
                 height: 20,
-              ),
-
-              ElevatedButton(
-                onPressed: () => updateBlog(),
-                child: const Text('Update Blog'),
               ),
             ],
           ),
